@@ -6,9 +6,9 @@ A light weight plugin to simulate android like pattern lock mechanism for you hy
 <strong>How to use?</strong><br>
 Include jquery and patternLock.js and patternLock.css to your page.
 <pre class="brush: xml;">
-    &lt;link href=&quot;patternLock.css&quot;  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
-    &lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;patternLock.js&quot;&gt;&lt;/script&gt;
+&lt;link href=&quot;patternLock.css&quot;  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;patternLock.js&quot;&gt;&lt;/script&gt;
 </pre>
 Than with simple initialization you have your pattern lock.
 <pre class="brush: js;">
