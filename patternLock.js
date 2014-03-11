@@ -1,6 +1,6 @@
 /*
-	ModalBox.js v 0.1.0
-	Author: sudhanshu yadav
+	patternLock.js v 0.1.1
+	Author: Sudhanshu Yadav
 	Copyright (c) 2013 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
 	Demo on: ignitersworld.com/lab/patternLock.html
 */
@@ -200,7 +200,10 @@
         readyDom(iObj);
 
 
-        //change offset property of holder if it does not have any property
+        //add class on holder
+		holder.addClass('patt-holder');
+		
+		//change offset property of holder if it does not have any property
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
         //assign event
