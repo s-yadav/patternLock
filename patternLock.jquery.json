@@ -20,5 +20,5 @@
     "docs": "http://ignitersworld.com/lab/patternLock.html#documentation",
     "homepage": "http://ignitersworld.com/lab/patternLock.html",
     "download": "https://github.com/s-yadav/patternLock",
-    "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for you hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely."
+    "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely."
 }
