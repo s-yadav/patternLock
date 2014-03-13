@@ -6,7 +6,7 @@
 */
 
 .patt-holder{background:#3382c0;}
-.patt-wrap{position:relative;}
+.patt-wrap{position:relative; cursor:pointer;}
 .patt-wrap ul, .patt-wrap li{
 	list-style: none;
 	margin:0;
