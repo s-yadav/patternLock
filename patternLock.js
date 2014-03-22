@@ -1,5 +1,5 @@
 /*
-	patternLock.js v 0.1.1
+	patternLock.js v 0.1.2
 	Author: Sudhanshu Yadav
 	Copyright (c) 2013 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
 	Demo on: ignitersworld.com/lab/patternLock.html
@@ -49,7 +49,8 @@
 
 
     var startHandler = function (e, obj) {
-        var iObj = objectHolder[obj.token];
+        e.preventDefault();
+		var iObj = objectHolder[obj.token];
 
         //check if pattern is visible or not
         if (!iObj.option.patternVisible) {
@@ -74,6 +75,7 @@
 
     },
         moveHandler = function (e, obj) {
+	        e.preventDefault();
             var x = e.pageX || e.originalEvent.touches[0].pageX,
                 y = e.pageY || e.originalEvent.touches[0].pageY,
                 iObj = objectHolder[obj.token],
@@ -130,6 +132,7 @@
 
         },
         endHandler = function (e, obj) {
+	        e.preventDefault();
             var iObj = objectHolder[obj.token],
                 li = iObj.pattCircle,
                 pattern = iObj.patternAry.join('');
