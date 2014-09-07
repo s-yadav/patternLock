@@ -16,3 +16,8 @@ var lock = new PatternLock("#patternContainer");
 </pre>
 <br/>
 Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLock.html">http://ignitersworld.com/lab/patternLock.html</a>
+
+Major updates
+=============
+<strong>v0.3.0</strong>
+- Fixed patternlock support on devices having both mouse and touch input.

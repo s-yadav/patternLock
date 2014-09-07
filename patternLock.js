@@ -1,5 +1,5 @@
 /*
-    patternLock.js v 0.2.0
+    patternLock.js v 0.3.0
     Author: Sudhanshu Yadav
     Copyright (c) 2013 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
@@ -7,11 +7,7 @@
 ;(function ($, window, document, undefined) {
     "use strict";
 
-    var isTouchSupported = !!('ontouchstart' in window),
-        touchStart = isTouchSupported ? "touchstart" : "mousedown",
-        touchEnd = isTouchSupported ? "touchend" : "mouseup",
-        touchMove = isTouchSupported ? "touchmove" : "mousemove",
-        nullFunc = function () {},
+    var nullFunc = function () {},
         objectHolder = {};
 
 
@@ -58,6 +54,9 @@
             if (!iObj.option.patternVisible) {
                 iObj.holder.addClass('patt-hidden');
             }
+
+            var touchMove = e.type == "touchstart" ? "touchmove" : "mousemove",
+                touchEnd = e.type == "touchstart" ? "touchend" : "mouseup";
 
             //assign events
             $(this).on(touchMove + '.pattern-move', function (e) {
@@ -211,7 +210,7 @@
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
         //assign event
-        holder.on(touchStart, function (e) {
+        holder.on( "touchstart mousedown", function (e) {
             startHandler.call(this, e, self);
         });
 
