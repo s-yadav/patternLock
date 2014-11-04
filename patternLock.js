@@ -1,8 +1,8 @@
 /*
-    patternLock.js v 0.3.1
+    patternLock.js v 0.4.0
     Author: Sudhanshu Yadav
     Copyright (c) 2013 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
-    Demo on: ignitersworld.com/lab/patternLock.html
+    Demo and documentaion on: ignitersworld.com/lab/patternLock.html
 */
 ;(function ($, window, document, undefined) {
     "use strict";
@@ -49,6 +49,8 @@
     var startHandler = function (e, obj) {
             e.preventDefault();
             var iObj = objectHolder[obj.token];
+
+            if(iObj.disabled) return;
 
             //check if pattern is visible or not
             if (!iObj.option.patternVisible) {
@@ -235,6 +237,7 @@
 
     PatternLock.prototype = {
         constructor: PatternLock,
+        //method to set options after initializtion
         option: function (key, val) {
             var iObj = objectHolder[this.token],
                 option = iObj.option;
@@ -250,9 +253,46 @@
                 }
             }
         },
+        //get drawn pattern as string
         getPattern: function () {
             return objectHolder[this.token].patternAry.join('');
         },
+        //method to draw a pattern dynamically
+        setPattern : function(pattern){
+            var iObj = objectHolder[this.token],
+                option = iObj.option,
+                matrix = option.matrix,
+                margin = option.margin,
+                radius = option.radius;
+
+            //allow to set password manually only when enable set pattern option is true
+            if(!option.enableSetPattern) return;
+
+            this.reset();
+            iObj.wrapLeft = 0;
+            iObj.wrapTop = 0;
+            
+            for (var i = 0; i < pattern.length; i++){
+                var idx = pattern[i] - 1,
+                    x = idx % matrix [1],
+                    y = Math.floor(idx/matrix [1]),
+                    pageX = x * (2 * margin + 2 * radius) + 2 * margin + radius,
+                    pageY = y * (2 * margin + 2 * radius) + 2 * margin + radius;
+                
+                 moveHandler.call(null, {pageX:pageX, pageY: pageY, preventDefault: nullFunc, originalEvent:{touches:[{pageX:pageX, pageY: pageY}]}}, this);    
+                    
+            }
+        },
+        //to temprory enable disable plugin
+        enable : function(){
+            var iObj = objectHolder[this.token];
+            iObj.disabled = false;
+        },
+        disable : function(){
+            var iObj = objectHolder[this.token];
+            iObj.disabled = true;
+        },
+        //reset pattern lock
         reset: function () {
             var iObj = objectHolder[this.token];
             //to remove lines
@@ -266,9 +306,11 @@
             iObj.holder.removeClass('patt-error');
 
         },
+        //to display error if pattern is not drawn correct
         error: function () {
             objectHolder[this.token].holder.addClass('patt-error');
         },
+        //to check the drawn pattern against given pattern
         checkForPattern: function (pattern, success, error) {
             var iObj = objectHolder[this.token];
             iObj.rightPattern = pattern;
@@ -283,7 +325,8 @@
         margin: 20,
         radius: 25,
         patternVisible: true,
-        lineOnMove: true
+        lineOnMove: true,
+        enableSetPattern : false
     };
 
 
