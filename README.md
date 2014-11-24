@@ -21,3 +21,6 @@ Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLoc
 
 <strong>v0.3.0</strong>
 - Fixed patternlock support on devices having both mouse and touch input.
+
+<strong>v0.4.0</strong>
+- Added setPattern, disable, enable methods.
