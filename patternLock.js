@@ -1,7 +1,7 @@
 /*
-    patternLock.js v 0.4.2
+    patternLock.js v 0.5.0
     Author: Sudhanshu Yadav
-    Copyright (c) 2013 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
+    Copyright (c) 2015 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
 */
 ;(function ($, window, document, undefined) {
@@ -97,7 +97,8 @@
 
             if (idx) {
                 if (patternAry.indexOf(pattId) == -1) {
-                    var elm = $(li[idx - 1]);
+                    var elm = $(li[idx - 1]),
+                        direction; //direction of pattern
 
                     //check and mark if any points are in middle of previous point and current point, if it does check them
                     if (iObj.lastPosObj) {
@@ -121,9 +122,15 @@
                                 //push pattern on array
                                 patternAry.push(nextPattId);
                             }
-
                         }
+                        direction = [];
+                        posObj.j - lastPosObj.j > 0? direction.push('s') : posObj.j - lastPosObj.j < 0 ? direction.push('n') : 0;
+                        posObj.i - lastPosObj.i > 0? direction.push('e') : posObj.i - lastPosObj.i < 0 ? direction.push('w') : 0;
+                        direction = direction.join('-');
+
                     }
+                    
+                    
 
                     //add the current element on pattern
                     elm.addClass('hovered');
@@ -147,6 +154,11 @@
                         if (!lineOnMove) iObj.line.show();
                     }
 
+                    //add direction class on pattern circle and lines
+                    if(direction){
+                        iObj.lastElm.addClass(direction);
+                        iObj.line.addClass(direction);
+                    }
                     //to create new line
                     var line = $('<div class="patt-lines" style="top:' + (newY - 5) + 'px; left:' + (newX - 5) + 'px"></div>');
                     iObj.line = line;
@@ -155,8 +167,11 @@
                     //add on dom
                     iObj.holder.append(line);
                     if (!lineOnMove) iObj.line.hide();
+                    
+                    iObj.lastElm = elm;
                 }
                 iObj.lastPosObj = posObj;
+                
             }
 
 
@@ -332,7 +347,7 @@
         reset: function () {
             var iObj = objectHolder[this.token];
             //to remove lines
-            iObj.pattCircle.removeClass('hovered');
+            iObj.pattCircle.removeClass('hovered s n w e s-w s-e n-w n-e');
             iObj.holder.find('.patt-lines').remove();
 
             //add/reset a array which capture pattern

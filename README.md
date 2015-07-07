@@ -1,7 +1,7 @@
 patternLock
 ===========
 
-A light weight plugin to simulate android like pattern lock interface for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.
+A light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.
 
 <strong>How to use?</strong><br>
 Include jquery and patternLock.js and patternLock.css to your page.
