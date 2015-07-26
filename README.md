@@ -24,3 +24,6 @@ Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLoc
 
 <strong>v0.4.0</strong>
 - Added setPattern, disable, enable methods.
+
+<strong>v0.5.0</strong>
+- Added directional classes, dir, n,s,e,w,n-e,n-w,s-e,s-w.
