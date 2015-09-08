@@ -1,13 +1,13 @@
 /*
-    patternLock.js v 0.5.0
+    patternLock.js v 0.5.1
     Author: Sudhanshu Yadav
     Copyright (c) 2015 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
 */
-;(function ($, window, document, undefined) {
+;(function($, window, document, undefined) {
     "use strict";
 
-    var nullFunc = function () {},
+    var nullFunc = function() {},
         objectHolder = {};
 
     //internal functions
@@ -43,38 +43,38 @@
         };
     }
 
-    var startHandler = function (e, obj) {
-            e.preventDefault();
-            var iObj = objectHolder[obj.token];
+    var startHandler = function(e, obj) {
+        e.preventDefault();
+        var iObj = objectHolder[obj.token];
 
-            if (iObj.disabled) return;
+        if (iObj.disabled) return;
 
-            //check if pattern is visible or not
-            if (!iObj.option.patternVisible) {
-                iObj.holder.addClass('patt-hidden');
-            }
+        //check if pattern is visible or not
+        if (!iObj.option.patternVisible) {
+            iObj.holder.addClass('patt-hidden');
+        }
 
-            var touchMove = e.type == "touchstart" ? "touchmove" : "mousemove",
-                touchEnd = e.type == "touchstart" ? "touchend" : "mouseup";
+        var touchMove = e.type == "touchstart" ? "touchmove" : "mousemove",
+            touchEnd = e.type == "touchstart" ? "touchend" : "mouseup";
 
-            //assign events
-            $(this).on(touchMove + '.pattern-move', function (e) {
-                moveHandler.call(this, e, obj);
-            });
-            $(document).one(touchEnd, function () {
-                endHandler.call(this, e, obj);
-            });
-            //set pattern offset
-            var wrap = iObj.holder.find('.patt-wrap'),
-                offset = wrap.offset();
-            iObj.wrapTop = offset.top;
-            iObj.wrapLeft = offset.left;
+        //assign events
+        $(this).on(touchMove + '.pattern-move', function(e) {
+            moveHandler.call(this, e, obj);
+        });
+        $(document).one(touchEnd, function() {
+            endHandler.call(this, e, obj);
+        });
+        //set pattern offset
+        var wrap = iObj.holder.find('.patt-wrap'),
+            offset = wrap.offset();
+        iObj.wrapTop = offset.top;
+        iObj.wrapLeft = offset.left;
 
-            //reset pattern
-            obj.reset();
+        //reset pattern
+        obj.reset();
 
-        },
-        moveHandler = function (e, obj) {
+    },
+        moveHandler = function(e, obj) {
             e.preventDefault();
             var x = e.pageX || e.originalEvent.touches[0].pageX,
                 y = e.pageY || e.originalEvent.touches[0].pageY,
@@ -176,10 +176,10 @@
 
 
         },
-        endHandler = function (e, obj) {
+        endHandler = function(e, obj) {
             e.preventDefault();
             var iObj = objectHolder[obj.token],
-                pattern = iObj.patternAry.join('');
+                pattern = iObj.patternAry.join(iObj.option.delimiter);
 
             //remove hidden pattern class and remove event
             iObj.holder.off('.pattern-move').removeClass('patt-hidden');
@@ -207,7 +207,7 @@
 
     InternalMethods.prototype = {
         constructor: InternalMethods,
-        getIdxFromPoint: function (x, y) {
+        getIdxFromPoint: function(x, y) {
             var option = this.option,
                 matrix = option.matrix,
                 xi = x - this.wrapLeft,
@@ -253,7 +253,7 @@
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
         //assign event
-        holder.on("touchstart mousedown", function (e) {
+        holder.on("touchstart mousedown", function(e) {
             startHandler.call(this, e, self);
         });
 
@@ -263,7 +263,7 @@
         //adding a mapper function  
         var mapper = option.mapper;
         if (typeof mapper == "object") {
-            iObj.mapperFunc = function (idx) {
+            iObj.mapperFunc = function(idx) {
                 return mapper[idx];
             };
         } else if (typeof mapper == "function") {
@@ -279,7 +279,7 @@
     PatternLock.prototype = {
         constructor: PatternLock,
         //method to set options after initializtion
-        option: function (key, val) {
+        option: function(key, val) {
             var iObj = objectHolder[this.token],
                 option = iObj.option;
             //for set methods
@@ -295,11 +295,12 @@
             }
         },
         //get drawn pattern as string
-        getPattern: function () {
-            return objectHolder[this.token].patternAry.join('');
+        getPattern: function() {
+            var iObj = objectHolder[this.token];
+            return iObj.patternAry.join(iObj.option.delimiter);
         },
         //method to draw a pattern dynamically
-        setPattern: function (pattern) {
+        setPattern: function(pattern) {
             var iObj = objectHolder[this.token],
                 option = iObj.option,
                 matrix = option.matrix,
@@ -335,16 +336,16 @@
             }
         },
         //to temprory enable disable plugin
-        enable: function () {
+        enable: function() {
             var iObj = objectHolder[this.token];
             iObj.disabled = false;
         },
-        disable: function () {
+        disable: function() {
             var iObj = objectHolder[this.token];
             iObj.disabled = true;
         },
         //reset pattern lock
-        reset: function () {
+        reset: function() {
             var iObj = objectHolder[this.token];
             //to remove lines
             iObj.pattCircle.removeClass('hovered dir s n w e s-w s-e n-w n-e');
@@ -361,11 +362,11 @@
 
         },
         //to display error if pattern is not drawn correct
-        error: function () {
+        error: function() {
             objectHolder[this.token].holder.addClass('patt-error');
         },
         //to check the drawn pattern against given pattern
-        checkForPattern: function (pattern, success, error) {
+        checkForPattern: function(pattern, success, error) {
             var iObj = objectHolder[this.token];
             iObj.rightPattern = pattern;
             iObj.onSuccess = success || nullFunc;
@@ -379,6 +380,7 @@
         radius: 25,
         patternVisible: true,
         lineOnMove: true,
+        delimiter: "", // a delimeter between the pattern
         enableSetPattern: false
     };
 
