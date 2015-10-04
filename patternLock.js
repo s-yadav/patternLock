@@ -1,5 +1,5 @@
 /*
-    patternLock.js v 0.5.1
+    patternLock.js v 0.5.2
     Author: Sudhanshu Yadav
     Copyright (c) 2015 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
@@ -297,7 +297,7 @@
         //get drawn pattern as string
         getPattern: function() {
             var iObj = objectHolder[this.token];
-            return iObj.patternAry.join(iObj.option.delimiter);
+            return (iObj.patternAry || []).join(iObj.option.delimiter);
         },
         //method to draw a pattern dynamically
         setPattern: function(pattern) {
