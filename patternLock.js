@@ -385,4 +385,4 @@
     };
 
     window.PatternLock = PatternLock;
-}(jQuery, window, document));
+}($, window, document));
