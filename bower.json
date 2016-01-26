@@ -1,0 +1,38 @@
+{
+    "name": "patternLock",
+    "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.",
+    "main": "patternLock.js",
+    "author": {
+        "name": "Sudhanshu Yadav",
+        "email": "sudhanshuyadav2@gmail.com"
+    },
+    "version": "0.5.2",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/s-yadav/patternLock"
+    },
+    "ignore": [
+        "patternLock.jquery.json"
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/s-yadav/patternLock/blob/master/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/s-yadav/patternLock/issues"
+    },
+    "dependencies": {
+        "jquery": ">=1.8.1"
+    },
+    "keywords": [
+        "android-pattern-lock",
+        "pattern",
+        "lock"
+    ],
+    "readmeFilename": "README.md",
+    "demo": "http://ignitersworld.com/lab/patternLock.html#example",
+    "docs": "http://ignitersworld.com/lab/patternLock.html#documentation",
+    "homepage": "http://ignitersworld.com/lab/patternLock.html"
+}
