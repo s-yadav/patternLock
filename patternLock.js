@@ -74,134 +74,131 @@
         obj.reset();
 
     },
-        moveHandler = function(e, obj) {
-            e.preventDefault();
-            var x = e.pageX || e.originalEvent.touches[0].pageX,
-                y = e.pageY || e.originalEvent.touches[0].pageY,
-                iObj = objectHolder[obj.token],
-                li = iObj.pattCircle,
-                patternAry = iObj.patternAry,
-                lineOnMove = iObj.option.lineOnMove,
-                posObj = iObj.getIdxFromPoint(x, y),
-                idx = posObj.idx,
-                pattId = iObj.mapperFunc(idx) || idx;
+    moveHandler = function(e, obj) {
+        e.preventDefault();
+        var x = e.pageX || (e.originalEvent || e).touches[0].pageX,
+            y = e.pageY || (e.originalEvent || e).touches[0].pageY,
+            iObj = objectHolder[obj.token],
+            li = iObj.pattCircle,
+            patternAry = iObj.patternAry,
+            lineOnMove = iObj.option.lineOnMove,
+            posObj = iObj.getIdxFromPoint(x, y),
+            idx = posObj.idx,
+            pattId = iObj.mapperFunc(idx) || idx;
 
 
-            if (patternAry.length > 0) {
-                var laMove = getLengthAngle(iObj.lineX1, posObj.x, iObj.lineY1, posObj.y);
-                iObj.line.css({
-                    'width': (laMove.length + 10) + 'px',
-                    'transform': 'rotate(' + laMove.angle + 'deg)'
-                });
-            }
+        if (patternAry.length > 0) {
+            var laMove = getLengthAngle(iObj.lineX1, posObj.x, iObj.lineY1, posObj.y);
+            iObj.line.css({
+                'width': (laMove.length + 10) + 'px',
+                'transform': 'rotate(' + laMove.angle + 'deg)',
+                //for zepto
+                '-webkit-transform': 'rotate(' + laMove.angle + 'deg)',
+            });
+        }
 
-            if (idx) {
-                if (patternAry.indexOf(pattId) == -1) {
-                    var elm = $(li[idx - 1]),
-                        direction; //direction of pattern
+        if (idx) {
+            if (patternAry.indexOf(pattId) == -1) {
+                var elm = $(li[idx - 1]),
+                    direction; //direction of pattern
 
-                    //check and mark if any points are in middle of previous point and current point, if it does check them
-                    if (iObj.lastPosObj) {
-                        var lastPosObj = iObj.lastPosObj,
-                            ip = lastPosObj.i,
-                            jp = lastPosObj.j,
-                            iDiff = Math.abs(posObj.i - ip),
-                            jDiff = Math.abs(posObj.j - jp);
+                //check and mark if any points are in middle of previous point and current point, if it does check them
+                if (iObj.lastPosObj) {
+                    var lastPosObj = iObj.lastPosObj,
+                        ip = lastPosObj.i,
+                        jp = lastPosObj.j,
+                        iDiff = Math.abs(posObj.i - ip),
+                        jDiff = Math.abs(posObj.j - jp);
 
-                        while (((iDiff == 0 && jDiff > 1) || (jDiff == 0 && iDiff > 1) || (jDiff == iDiff && jDiff > 1)) && !(jp == posObj.j && ip == posObj.i)) {
-                            ip = iDiff ? Math.min(posObj.i, ip) + 1 : ip;
-                            jp = jDiff ? Math.min(posObj.j, jp) + 1 : jp;
-                            iDiff = Math.abs(posObj.i - ip);
-                            jDiff = Math.abs(posObj.j - jp);
+                    while (((iDiff == 0 && jDiff > 1) || (jDiff == 0 && iDiff > 1) || (jDiff == iDiff && jDiff > 1)) && !(jp == posObj.j && ip == posObj.i)) {
+                        ip = iDiff ? Math.min(posObj.i, ip) + 1 : ip;
+                        jp = jDiff ? Math.min(posObj.j, jp) + 1 : jp;
+                        iDiff = Math.abs(posObj.i - ip);
+                        jDiff = Math.abs(posObj.j - jp);
 
-                            var nextIdx = (jp - 1) * iObj.option.matrix[1] + ip,
-                                nextPattId = iObj.mapperFunc(nextIdx) || nextIdx;
+                        var nextIdx = (jp - 1) * iObj.option.matrix[1] + ip,
+                            nextPattId = iObj.mapperFunc(nextIdx) || nextIdx;
 
-                            if (patternAry.indexOf(nextPattId) == -1) {
-                                $(li[nextIdx - 1]).addClass('hovered');
-                                //push pattern on array
-                                patternAry.push(nextPattId);
-                            }
+                        if (patternAry.indexOf(nextPattId) == -1) {
+                            $(li[nextIdx - 1]).addClass('hovered');
+                            //push pattern on array
+                            patternAry.push(nextPattId);
                         }
-                        direction = [];
-                        posObj.j - lastPosObj.j > 0 ? direction.push('s') : posObj.j - lastPosObj.j < 0 ? direction.push('n') : 0;
-                        posObj.i - lastPosObj.i > 0 ? direction.push('e') : posObj.i - lastPosObj.i < 0 ? direction.push('w') : 0;
-                        direction = direction.join('-');
-
                     }
+                    direction = [];
+                    posObj.j - lastPosObj.j > 0 ? direction.push('s') : posObj.j - lastPosObj.j < 0 ? direction.push('n') : 0;
+                    posObj.i - lastPosObj.i > 0 ? direction.push('e') : posObj.i - lastPosObj.i < 0 ? direction.push('w') : 0;
+                    direction = direction.join('-');
 
-
-
-                    //add the current element on pattern
-                    elm.addClass('hovered');
-                    //push pattern on array
-                    patternAry.push(pattId);
-
-                    //add start point for line
-                    var margin = iObj.option.margin,
-                        radius = iObj.option.radius,
-                        newX = (posObj.i - 1) * (2 * margin + 2 * radius) + 2 * margin + radius,
-                        newY = (posObj.j - 1) * (2 * margin + 2 * radius) + 2 * margin + radius;
-
-                    if (patternAry.length != 1) {
-                        //to fix line
-                        var lA = getLengthAngle(iObj.lineX1, newX, iObj.lineY1, newY);
-                        iObj.line.css({
-                            'width': (lA.length + 10) + 'px',
-                            'transform': 'rotate(' + lA.angle + 'deg)'
-                        });
-
-                        if (!lineOnMove) iObj.line.show();
-                    }
-
-                    //add direction class on pattern circle and lines
-                    if (direction) {
-                        iObj.lastElm.addClass(direction + " dir");
-                        iObj.line.addClass(direction + " dir");
-                    }
-                    //to create new line
-                    var line = $('<div class="patt-lines" style="top:' + (newY - 5) + 'px; left:' + (newX - 5) + 'px"></div>');
-                    iObj.line = line;
-                    iObj.lineX1 = newX;
-                    iObj.lineY1 = newY;
-                    //add on dom
-                    iObj.holder.append(line);
-                    if (!lineOnMove) iObj.line.hide();
-
-                    iObj.lastElm = elm;
                 }
-                iObj.lastPosObj = posObj;
 
-            }
+                //add the current element on pattern
+                elm.addClass('hovered');
+                //push pattern on array
+                patternAry.push(pattId);
 
+                //add start point for line
+                var margin = iObj.option.margin,
+                    radius = iObj.option.radius,
+                    newX = (posObj.i - 1) * (2 * margin + 2 * radius) + 2 * margin + radius,
+                    newY = (posObj.j - 1) * (2 * margin + 2 * radius) + 2 * margin + radius;
 
-        },
-        endHandler = function(e, obj) {
-            e.preventDefault();
-            var iObj = objectHolder[obj.token],
-                pattern = iObj.patternAry.join(iObj.option.delimiter);
+                if (patternAry.length != 1) {
+                    //to fix line
+                    var lA = getLengthAngle(iObj.lineX1, newX, iObj.lineY1, newY);
+                    iObj.line.css({
+                        'width': (lA.length + 10) + 'px',
+                        'transform': 'rotate(' + lA.angle + 'deg)',
+                        //for zepto
+                        '-webkit-transform': 'rotate(' + lA.angle + 'deg)'
+                    });
 
-            //remove hidden pattern class and remove event
-            iObj.holder.off('.pattern-move').removeClass('patt-hidden');
-
-            if (!pattern) return;
-
-            iObj.option.onDraw(pattern);
-
-            //to remove last line
-            iObj.line.remove();
-
-
-
-            if (iObj.rightPattern) {
-                if (pattern == iObj.rightPattern) {
-                    iObj.onSuccess();
-                } else {
-                    iObj.onError();
-                    obj.error();
+                    if (!lineOnMove) iObj.line.show();
                 }
+
+                //add direction class on pattern circle and lines
+                if (direction) {
+                    iObj.lastElm.addClass(direction + " dir");
+                    iObj.line.addClass(direction + " dir");
+                }
+                //to create new line
+                var line = $('<div class="patt-lines" style="top:' + (newY - 5) + 'px; left:' + (newX - 5) + 'px"></div>');
+                iObj.line = line;
+                iObj.lineX1 = newX;
+                iObj.lineY1 = newY;
+                //add on dom
+                iObj.holder.append(line);
+                if (!lineOnMove) iObj.line.hide();
+
+                iObj.lastElm = elm;
             }
-        };
+            iObj.lastPosObj = posObj;
+        }
+    },
+    endHandler = function(e, obj) {
+        e.preventDefault();
+        var iObj = objectHolder[obj.token],
+            pattern = iObj.patternAry.join(iObj.option.delimiter);
+
+        //remove hidden pattern class and remove event
+        iObj.holder.off('.pattern-move').removeClass('patt-hidden');
+
+        if (!pattern) return;
+
+        iObj.option.onDraw(pattern);
+
+        //to remove last line
+        iObj.line.remove();
+
+        if (iObj.rightPattern) {
+            if (pattern == iObj.rightPattern) {
+                iObj.onSuccess();
+            } else {
+                iObj.onError();
+                obj.error();
+            }
+        }
+    };
 
     function InternalMethods() {}
 
@@ -260,7 +257,7 @@
         //handeling callback
         iObj.option.onDraw = option.onDraw || nullFunc;
 
-        //adding a mapper function  
+        //adding a mapper function
         var mapper = option.mapper;
         if (typeof mapper == "object") {
             iObj.mapperFunc = function(idx) {
@@ -385,4 +382,4 @@
     };
 
     window.PatternLock = PatternLock;
-}(jQuery, window, document));
+}(window.jQuery || window.Zepto, window, document));

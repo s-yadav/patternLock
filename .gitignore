@@ -1,0 +1,5 @@
+.DS_Store
+test
+nohup.out
+node_modules
+bower_components
