@@ -19,11 +19,14 @@ Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLoc
 
 <h3>Major updates</h3>
 
-<strong>v0.3.0</strong>
-- Fixed patternlock support on devices having both mouse and touch input.
+<strong>v0.6.0</strong>
+- UMD (AMD, CommonJS) support.
+
+<strong>v0.5.0</strong>
+- Added directional classes, dir, n,s,e,w,n-e,n-w,s-e,s-w.
 
 <strong>v0.4.0</strong>
 - Added setPattern, disable, enable methods.
 
-<strong>v0.5.0</strong>
-- Added directional classes, dir, n,s,e,w,n-e,n-w,s-e,s-w.
+<strong>v0.3.0</strong>
+- Fixed patternlock support on devices having both mouse and touch input.
