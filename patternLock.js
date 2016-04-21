@@ -1,7 +1,7 @@
 /*
-    patternLock.js v 0.7.0
+    patternLock.js v 0.6.0
     Author: Sudhanshu Yadav
-    Copyright (c) 2015,2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
+    Copyright (c) 2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
 */
 
@@ -88,7 +88,7 @@
             });
             //set pattern offset
             var wrap = iObj.holder.find('.patt-wrap'),
-                offset = wrap[0].getBoundingClientRect();
+                offset = wrap.offset();
             iObj.wrapTop = offset.top;
             iObj.wrapLeft = offset.left;
 
@@ -98,8 +98,8 @@
         },
         moveHandler = function (e, obj) {
             e.preventDefault();
-            var x = e.clientX || e.originalEvent.touches[0].clientX,
-                y = e.clientY || e.originalEvent.touches[0].clientY,
+            var x = e.pageX || e.originalEvent.touches[0].pageX,
+                y = e.pageY || e.originalEvent.touches[0].pageY,
                 iObj = objectHolder[obj.token],
                 li = iObj.pattCircle,
                 patternAry = iObj.patternAry,
@@ -282,7 +282,7 @@
         //handeling callback
         iObj.option.onDraw = option.onDraw || nullFunc;
 
-        //adding a mapper function
+        //adding a mapper function  
         var mapper = option.mapper;
         if (typeof mapper == "object") {
             iObj.mapperFunc = function (idx) {
@@ -340,13 +340,19 @@
                 var idx = pattern[i] - 1,
                     x = idx % matrix[1],
                     y = Math.floor(idx / matrix[1]),
-                    clientX = x * (2 * margin + 2 * radius) + 2 * margin + radius,
-                    clientY = y * (2 * margin + 2 * radius) + 2 * margin + radius;
+                    pageX = x * (2 * margin + 2 * radius) + 2 * margin + radius,
+                    pageY = y * (2 * margin + 2 * radius) + 2 * margin + radius;
 
                 moveHandler.call(null, {
-                    clientX: clientX,
-                    clientY: clientY,
-                    preventDefault: nullFunc
+                    pageX: pageX,
+                    pageY: pageY,
+                    preventDefault: nullFunc,
+                    originalEvent: {
+                        touches: [{
+                            pageX: pageX,
+                            pageY: pageY
+                        }]
+                    }
                 }, this);
 
             }
