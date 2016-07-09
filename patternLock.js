@@ -331,7 +331,10 @@
 
             //allow to set password manually only when enable set pattern option is true
             if (!option.enableSetPattern) return;
-
+// bluppfisk: original code did not take delimiter into account, returning errors with matrices larger than 9 where
+// the pattern from dot 1 to dot 10 would be recorded as 110 and misinterpreted by setPattern as 1-1-0. Splitting
+// the pattern on the set delimiter helps.
+            pattern = pattern.split(option.delimiter);
             this.reset();
             iObj.wrapLeft = 0;
             iObj.wrapTop = 0;
