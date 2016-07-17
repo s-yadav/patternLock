@@ -1,5 +1,5 @@
 /*
-    patternLock.js v 0.8.0
+    patternLock.js v 1.0.0
     Author: Sudhanshu Yadav
     Copyright (c) 2015,2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html

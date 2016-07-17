@@ -19,6 +19,11 @@ Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLoc
 
 <h3>Major updates</h3>
 
+<strong>v1.0.0</strong>
+- Added a option to allow repeating over dots.
+- Added on npm.
+- Fixed setPattern bug for larger matrix.
+
 <strong>v0.6.0</strong>
 - UMD (AMD, CommonJS) support.
 

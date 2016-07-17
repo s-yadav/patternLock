@@ -1,5 +1,5 @@
 {
-    "name": "patternLock",
+    "name": "patternlock",
     "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.",
     "main": "patternLock.js",
     "author": {
@@ -26,7 +26,6 @@
         "pattern",
         "lock"
     ],
-    "readmeFilename": "README.md",
     "demo": "http://ignitersworld.com/lab/patternLock.html#example",
     "docs": "http://ignitersworld.com/lab/patternLock.html#documentation",
     "homepage": "http://ignitersworld.com/lab/patternLock.html"
