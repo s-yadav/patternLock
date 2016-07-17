@@ -1,5 +1,5 @@
 /*
-    patternLock.js v 0.7.0
+    patternLock.js v 0.8.0
     Author: Sudhanshu Yadav
     Copyright (c) 2015,2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: ignitersworld.com/lab/patternLock.html
@@ -101,9 +101,10 @@
             var x = e.clientX || e.originalEvent.touches[0].clientX,
                 y = e.clientY || e.originalEvent.touches[0].clientY,
                 iObj = objectHolder[obj.token],
+                option = iObj.option,
                 li = iObj.pattCircle,
                 patternAry = iObj.patternAry,
-                lineOnMove = iObj.option.lineOnMove,
+                lineOnMove = option.lineOnMove,
                 posObj = iObj.getIdxFromPoint(x, y),
                 idx = posObj.idx,
                 pattId = iObj.mapperFunc(idx) || idx;
@@ -118,7 +119,8 @@
             }
 
             if (idx) {
-                if (patternAry.indexOf(pattId) == -1) {
+                if ((option.allowRepeat && patternAry[patternAry.length-1] !== pattId) || patternAry.indexOf(pattId) === -1) {
+                   console.log('coming twice', patternAry, pattId);
                     var elm = $(li[idx - 1]),
                         direction; //direction of pattern
 
@@ -136,10 +138,10 @@
                             iDiff = Math.abs(posObj.i - ip);
                             jDiff = Math.abs(posObj.j - jp);
 
-                            var nextIdx = (jp - 1) * iObj.option.matrix[1] + ip,
+                            var nextIdx = (jp - 1) * option.matrix[1] + ip,
                                 nextPattId = iObj.mapperFunc(nextIdx) || nextIdx;
 
-                            if (patternAry.indexOf(nextPattId) == -1) {
+                            if (option.allowRepeat || patternAry.indexOf(nextPattId) == -1) {
                                 $(li[nextIdx - 1]).addClass('hovered');
                                 //push pattern on array
                                 patternAry.push(nextPattId);
@@ -156,12 +158,15 @@
 
                     //add the current element on pattern
                     elm.addClass('hovered');
+
+                     console.log(patternAry, pattId);
                     //push pattern on array
                     patternAry.push(pattId);
+                    console.log('after push', patternAry, pattId);
 
                     //add start point for line
-                    var margin = iObj.option.margin,
-                        radius = iObj.option.radius,
+                    var margin = option.margin,
+                        radius = option.radius,
                         newX = (posObj.i - 1) * (2 * margin + 2 * radius) + 2 * margin + radius,
                         newY = (posObj.j - 1) * (2 * margin + 2 * radius) + 2 * margin + radius;
 
@@ -201,14 +206,15 @@
         endHandler = function (e, obj) {
             e.preventDefault();
             var iObj = objectHolder[obj.token],
-                pattern = iObj.patternAry.join(iObj.option.delimiter);
+                option = iObj.option,
+                pattern = iObj.patternAry.join(option.delimiter);
 
             //remove hidden pattern class and remove event
             iObj.holder.off('.pattern-move').removeClass('patt-hidden');
 
             if (!pattern) return;
 
-            iObj.option.onDraw(pattern);
+            option.onDraw(pattern);
 
             //to remove last line
             iObj.line.remove();
@@ -265,7 +271,14 @@
         if (holder.length == 0) return;
 
         iObj.object = self;
-        option = iObj.option = $.extend({}, PatternLock.defaults, option);
+
+        //optimizing options
+        option = option || {};
+        var defaultsFixes = {onDraw : nullFunc};
+        var matrix = option.matrix;
+        if(matrix && matrix[0] * matrix[1] > 9) defaultsFixes.delimiter = ",";
+
+        option = iObj.option = $.extend({}, PatternLock.defaults, defaultsFixes, option);
         readyDom(iObj);
 
         //add class on holder
@@ -278,9 +291,6 @@
         holder.on("touchstart mousedown", function (e) {
             startHandler.call(this, e, self);
         });
-
-        //handeling callback
-        iObj.option.onDraw = option.onDraw || nullFunc;
 
         //adding a mapper function
         var mapper = option.mapper;
@@ -331,6 +341,11 @@
 
             //allow to set password manually only when enable set pattern option is true
             if (!option.enableSetPattern) return;
+
+            //check if pattern is string break it with the delimiter
+            if(typeof pattern === "string"){
+              pattern = pattern.split(option.delimiter);
+            }
 
             this.reset();
             iObj.wrapLeft = 0;
@@ -396,8 +411,9 @@
         radius: 25,
         patternVisible: true,
         lineOnMove: true,
-        delimiter: "", // a delimeter between the pattern
-        enableSetPattern: false
+        delimiter: "", // a delimiter between the pattern
+        enableSetPattern: false,
+        allowRepeat : false
     };
 
     return PatternLock;

@@ -1,5 +1,5 @@
 /*
-	patternLock.js v 0.6.0
+	patternLock.js v 0.8.0
 	Author: Sudhanshu Yadav
 	Copyright (c) 2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
 	Demo and documentaion on: ignitersworld.com/lab/patternLock.html
@@ -20,7 +20,7 @@
  }
 .patt-circ.hovered{
 	border:3px solid #009900;
-} 
+}
 
 .patt-error .patt-circ.hovered{
 	border:3px solid #BA1B26;
