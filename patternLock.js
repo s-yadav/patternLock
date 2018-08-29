@@ -86,6 +86,7 @@
             });
             $(document).one(touchEnd, function() {
                 endHandler.call(this, e, obj);
+				if(obj.onTouchEnd)obj.onTouchEnd();
             });
             //set pattern offset
             var wrap = iObj.holder.find('.patt-wrap'),
