@@ -1,32 +1,57 @@
 {
-    "name": "patternlock",
-    "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.",
-    "main": "patternLock.js",
-    "author": {
-        "name": "Sudhanshu Yadav",
-        "email": "sudhanshuyadav2@gmail.com"
-    },
-    "version": "1.0.2",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/s-yadav/patternLock"
-    },
-    "ignore": [
-        "patternLock.jquery.json"
-    ],
-    "licenses": "MIT",
-    "bugs": {
-        "url": "https://github.com/s-yadav/patternLock/issues"
-    },
-    "dependencies": {
-        "jquery": ">=1.8.1"
-    },
-    "keywords": [
-        "android-pattern-lock",
-        "pattern",
-        "lock"
-    ],
-    "demo": "http://ignitersworld.com/lab/patternLock.html#example",
-    "docs": "http://ignitersworld.com/lab/patternLock.html#documentation",
-    "homepage": "http://ignitersworld.com/lab/patternLock.html"
+  "name": "patternlock",
+  "description": "Pattern Lock is a light weight plugin to simulate android like pattern lock mechanism for your hybrid app or for a website. It's easy to configure and style so you can have different type of pattern lock according to your need. Is also provide some methods to use this plugin securely.",
+  "main": "lib/PatternLock.js",
+  "scripts": {
+    "start": "parcel example/index.html",
+    "build": "yarn build-js && yarn build-lib && yarn build-css",
+    "build-js": "rollup -c rollup.config.js",
+    "build-lib": "babel src --out-dir lib",
+    "build-css": "cpy src/patternlock.css dist && postcss src/patternlock.css > dist/patternlock.min.css"
+  },
+  "author": {
+    "name": "Sudhanshu Yadav",
+    "email": "sudhanshuyadav2@gmail.com"
+  },
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s-yadav/patternLock"
+  },
+  "ignore": [
+    "patternLock.jquery.json"
+  ],
+  "licenses": "MIT",
+  "bugs": {
+    "url": "https://github.com/s-yadav/patternLock/issues"
+  },
+  "keywords": [
+    "android-pattern-lock",
+    "pattern",
+    "lock"
+  ],
+  "demo": "http://ignitersworld.com/lab/patternLock.html#example",
+  "docs": "http://ignitersworld.com/lab/patternLock.html#documentation",
+  "homepage": "http://ignitersworld.com/lab/patternLock.html",
+  "devDependencies": {
+    "babel": "6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "cpy-cli": "^2.0.0",
+    "cssnano": "^4.1.0",
+    "eslint": "4.*.*",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "parcel": "^1.9.7",
+    "postcss-cli": "^6.0.0",
+    "rollup": "^0.65.0",
+    "rollup-plugin-babel": "3",
+    "rollup-plugin-uglify": "^5.0.2"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
 }

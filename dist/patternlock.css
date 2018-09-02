@@ -1,10 +1,3 @@
-/*
-	patternLock.js v 1.0.2
-	Author: Sudhanshu Yadav
-	Copyright (c) 2016 Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
-	Demo and documentaion on: ignitersworld.com/lab/patternLock.html
-*/
-
 .patt-holder{background:#3382c0;  -ms-touch-action: none;}
 .patt-wrap{position:relative; cursor:pointer;}
 .patt-wrap ul, .patt-wrap li{
