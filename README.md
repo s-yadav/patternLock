@@ -19,7 +19,8 @@ import 'patternlock/dist/patternlock.css'; //or import this directly on css file
 
 You can also use the standalone UMD build by including `dist/patternlock.min.js` and `dist/patternlock.min.css` in your page.
 
-##Documentation
+### Documentation
+
 Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLock.html#example">http://ignitersworld.com/lab/patternLock.html</a>
 
 ### Major updates
