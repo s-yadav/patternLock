@@ -3,7 +3,7 @@ import { uglify } from 'rollup-plugin-uglify';
 
 import fs from 'fs';
 
-const bableConfig = JSON.parse(fs.readFileSync('.babelrc'));
+const babelConfig = JSON.parse(fs.readFileSync('.babelrc'));
 
 const defaultConfig = {
   input: 'src/PatternLock.js',
@@ -18,7 +18,7 @@ const defaultConfig = {
   plugins: [
     babel({
       babelrc: false,
-      ...bableConfig,
+      ...babelConfig,
       presets: [['env', { modules: false }]]
     }),
   ],

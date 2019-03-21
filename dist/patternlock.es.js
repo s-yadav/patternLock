@@ -217,7 +217,7 @@ var PatternLockInternal = function () {
 
       if (curPos.j - lastPos.j > 0) {
         direction.push('s');
-      } else if (curPos.j - lastPos.j > 0) {
+      } else if (curPos.j - lastPos.j < 0) {
         direction.push('n');
       }
 
@@ -320,17 +320,19 @@ var PatternLock = function () {
     value: function setPattern(pattern) {
       var iObj = privateMap.get(this);
 
-      var option = iObj.option,
-          matrix = iObj.matrix,
-          margin = iObj.margin,
-          radius = iObj.radius;
+      var option = iObj.option;
+      var matrix = option.matrix,
+          margin = option.margin,
+          radius = option.radius,
+          enableSetPattern = option.enableSetPattern,
+          delimiter = option.delimiter;
 
       // allow to set password manually only when enable set pattern option is true
 
-      if (!option.enableSetPattern) return;
+      if (!enableSetPattern) return;
 
       // check if pattern is string break it with the delimiter
-      var patternAry = typeof pattern === 'string' ? pattern.split(option.delimiter) : pattern;
+      var patternAry = typeof pattern === 'string' ? pattern.split(delimiter) : pattern;
 
       this.reset();
       iObj.wrapLeft = 0;
@@ -590,10 +592,10 @@ var _initialiseProps = function _initialiseProps() {
 
     if (!pattern) return;
 
-    option.onDraw(pattern);
-
     // to remove last line
     remove(iObj.line);
+
+    option.onDraw(pattern);
 
     if (iObj.rightPattern) {
       if (pattern === iObj.rightPattern) {

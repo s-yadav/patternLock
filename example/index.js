@@ -3,9 +3,9 @@ import PatternLock from '../src/PatternLock.js';
 
 import '../src/patternLock.css';
 
-const PatternCreater = new PatternLock('#createPattern', {
+const PatternCreater = new PatternLock('#create-pattern', {
   onDraw(pattern) {
-    [lock1, lock2, lock3, lock4].forEach(function(lock) {
+    [exBasic, exLineOnMove, exPatternVisible, exSize].forEach(function(lock) {
       lock.checkForPattern(pattern, function() {
         alert("Hoorey");
       });
@@ -13,15 +13,16 @@ const PatternCreater = new PatternLock('#createPattern', {
   },
 });
 
-const lock1 = new PatternLock('#patternHolder1');
-const lock2 = new PatternLock('#patternHolder2', { lineOnMove: false });
-const lock3 = new PatternLock('#patternHolder3', { patternVisible: false });
-const lock4 = (window.lock4 = new PatternLock('#patternHolder4', {
+const exBasic = new PatternLock('#ex-basic');
+const exLineOnMove = new PatternLock('#ex-line-on-move', { lineOnMove: false });
+const exPatternVisible = new PatternLock('#ex-pattern-visible', { patternVisible: false });
+const exSize = (window.exSize = new PatternLock('#ex-size', {
   radius: 30,
   margin: 20,
+  enableSetPattern: true,
 }));
-const lock5 = new PatternLock('#patternHolder5', { matrix: [4, 4] });
-const lock6 = new PatternLock('#patternHolder6', {
+const exMatrix = new PatternLock('#ex-matrix', { matrix: [4, 4] });
+const exMapper = new PatternLock('#ex-mapper', {
   mapper(idx) {
     return (idx % 9) + 1;
   },
@@ -30,12 +31,14 @@ const lock6 = new PatternLock('#patternHolder6', {
   },
 });
 const lock7 = new PatternLock('#patternHolder7', { enableSetPattern: true });
-const lock8 = new PatternLock('#patternHolder8', { allowRepeat: true });
+const exAllowRepeat = new PatternLock('#ex-allow-repeat', { allowRepeat: true });
+
+const exDirection = new PatternLock('#ex-direction');
 
 let patternId; let 
 patternUI;
 
-const captchaHolder = $('#patternCaptcha');
+const captchaHolder = $('#pattern-captcha');
 
 function reloadCaptcha() {
   $.ajax({
@@ -49,7 +52,7 @@ function reloadCaptcha() {
         imgData = data.imageData;
 
       if (!patternUI) {
-        patternUI = new PatternLock("#patternUI", {
+        patternUI = new PatternLock("#pattern-ui", {
           matrix: matrix,
           radius: 20,
           margin: 15,
@@ -66,11 +69,11 @@ function reloadCaptcha() {
 
 reloadCaptcha();
 
-$('#refreshCaptcha').click(() => {
+$('#refresh-captcha').click(() => {
   reloadCaptcha();
 });
 
-$('#submitCaptcha').click(() => {
+$('#submit-captcha').click(() => {
   $.ajax({
     url: "http://patterncaptcha.herokuapp.com/api/checkPattern",
     type: "get",

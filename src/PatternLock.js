@@ -127,7 +127,7 @@ class PatternLockInternal {
 
     if (curPos.j - lastPos.j > 0) {
       direction.push('s');
-    } else if (curPos.j - lastPos.j > 0) {
+    } else if (curPos.j - lastPos.j < 0) {
       direction.push('n');
     }
 
@@ -213,15 +213,17 @@ class PatternLock {
   setPattern(pattern) {
     const iObj = privateMap.get(this);
 
+    const { option } = iObj;
+
     const {
-      option, matrix, margin, radius,
-    } = iObj;
+      matrix, margin, radius, enableSetPattern, delimiter
+    } = option;
 
     // allow to set password manually only when enable set pattern option is true
-    if (!option.enableSetPattern) return;
+    if (!enableSetPattern) return;
 
     // check if pattern is string break it with the delimiter
-    const patternAry = typeof pattern === 'string' ? pattern.split(option.delimiter) : pattern;
+    const patternAry = typeof pattern === 'string' ? pattern.split(delimiter) : pattern;
 
     this.reset();
     iObj.wrapLeft = 0;
@@ -424,11 +426,11 @@ class PatternLock {
     removeClass(iObj.holder, 'patt-hidden');
 
     if (!pattern) return;
-
-    option.onDraw(pattern);
-
+    
     // to remove last line
     remove(iObj.line);
+    
+    option.onDraw(pattern);
 
     if (iObj.rightPattern) {
       if (pattern === iObj.rightPattern) {

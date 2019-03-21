@@ -1,0 +1,51 @@
+.pattern-holder {
+  margin-bottom: 50px;
+}
+
+#ex-direction .patt-wrap {
+  z-index: 10;
+}
+#ex-direction .patt-circ.hovered {
+  background-color: #cde2f2;
+  border: none;
+}
+#ex-direction .patt-circ.hovered .patt-dots {
+  display: none;
+}
+#ex-direction .patt-circ.dir {
+  background-image: url('./icon-arrow.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#ex-direction .patt-circ.e {
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+}
+#ex-direction .patt-circ.s-e {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+#ex-direction .patt-circ.s {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+#ex-direction .patt-circ.s-w {
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+#ex-direction .patt-circ.w {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#ex-direction .patt-circ.n-w {
+  -webkit-transform: rotate(225deg);
+   transform: rotate(225deg);
+}
+#ex-direction .patt-circ.n {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+#ex-direction .patt-circ.n-e {
+  -webkit-transform: rotate(315deg);
+  transform: rotate(315deg);
+}

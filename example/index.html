@@ -1,97 +1,111 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="example-container">
+      <div class="example">
+        <strong>
+          Set you pattern. This will be used to validate all other 3*3 pattern
+          in following examples.
+        </strong>
+        <div id="create-pattern" class="pattern-holder"></div>
+      </div>
 
-<body>
-  <div id="example">
-    <strong>Set you pattern. This will be used to validate all other 3*3 pattern in following examples.</strong>
+      <div class="example">
+        <strong>Minimum initialization.</strong>
+        <pre class="brush: js;">
+          var lock= new PatternLock('#patternHolder');
+        </pre>
+        <div id="ex-basic" class="pattern-holder"></div>
+      </div>
 
-    <div id="createPattern" class="pattern-holder">
+      <div class="example">
+        <strong>
+          Draw line between two points only when we reach second point.
+        </strong>
+        <pre class="brush: js;">
+          var lock= new PatternLock('#patternHolder',{lineOnMove:false})
+        </pre>
+        <div id="ex-line-on-move" class="pattern-holder"></div>
+      </div>
 
-    </div>
-    <br />
-    <br />
-    <strong>Minimum initialization.</strong>
-    <pre class="brush: js;">
-    var lock= new PatternLock('#patternHolder');
-    </pre>
-    <div id="patternHolder1" class="pattern-holder">
-    </div>
+      <div class="example">
+        <strong>Keep pattern hidden while drawing.</strong>
+        <pre class="brush: js;">
+          var lock= new PatternLock('#patternHolder',{patternVisible:false});
+        </pre>
+        <div id="ex-pattern-visible" class="pattern-holder"></div>
+      </div>
 
-    <br />
-    <br />
+      <div class="example">
+        <strong>Allow repeating over dots</strong>
+        <p>
+          Note : Allowing repeation over dots gives a more complex pattern but
+          have different side effects, like arrow css will not be correct,
+          forming a multiple loop and confusing patterns.
+        </p>
+        <pre class="brush: js;">
+            var lock= new PatternLock('#patternHolder',{allowRepeat : true});
+        </pre>
+        <div id="ex-allow-repeat" class="pattern-holder"></div>
+      </div>
 
-    <strong>Draw line between two points only when we reach second point.</strong>
-    <pre class="brush: js;">
-    var lock= new PatternLock('#patternHolder',{lineOnMove:false})
-    </pre>
-    <div id="patternHolder2" class="pattern-holder">
-    </div>
-
-    <br />
-    <br />
-    <strong>Keep pattern hidden while drawing.</strong>
-    <pre class="brush: js;">
-    var lock= new PatternLock('#patternHolder',{patternVisible:false});
-    </pre>
-
-    <div id="patternHolder3" class="pattern-holder">
-    </div>
-
-    <strong>Allow repeating over dots</strong>
-    <p>Note : Allowing repeation over dots gives a more complex pattern but have different side effects, like arrow css will
-      not be correct, forming a multiple loop and confusing patterns.</p>
-    <pre class="brush: js;">
-        var lock= new PatternLock('#patternHolder',{allowRepeat : true});
+      <div class="example">
+        <strong>Updating size and spacing between circles</strong>
+        <pre class="brush: js;">
+          var lock= new PatternLock('#patternHolder',{radius:30,margin:20});
         </pre>
 
-    <div id="patternHolder8" class="pattern-holder">
-    </div>
-    <br />
-    <br />
+        <div id="ex-size" class="pattern-holder"></div>
+      </div>
 
-    <strong>Updating size and spacing between circles</strong>
-    <pre class="brush: js;">
-    var lock= new PatternLock('#patternHolder',{radius:30,margin:20});
-    </pre>
+      <div class="example">
+        <strong>Create different matrix pattern</strong>
+        <pre class="brush: js;">
+          var lock= new PatternLock('#patternHolder',{matrix:[4,4]});
+        </pre>
+        <div id="ex-matrix" class="pattern-holder"></div>
+      </div>
 
-    <div id="patternHolder4" class="pattern-holder">
-    </div>
+      <div class="example">
+        <strong>Using mapper</strong>
+        <pre class="brush: js;">
+          var lock=new PatternLock('#patternHolder',{
+            mapper: function(idx){
+              return (idx%9) + 1;
+              }
+          });
+        </pre>
 
-    <br />
-    <br />
-    <strong>Create different matrix pattern</strong>
-    <pre class="brush: js;">
-    var lock= new PatternLock('#patternHolder',{matrix:[4,4]});
-    </pre>
-    <div id="patternHolder5" class="pattern-holder">
-    </div>
-    <br />
-    <br />
-    <strong>Using mapper</strong>
-    <pre class="brush: js;">
-    var lock=new PatternLock('#patternHolder',{
-      mapper: function(idx){
-        return (idx%9) + 1;
-        }
-    });
-    </pre>
-    <div id="patternHolder6" class="pattern-holder">
-    </div>
-    <br />
-    <br />
-    <strong>Using as a captcha</strong>(Require
-    <a href="http://ignitersworld.com/lab/patternCaptcha.html">patternCaptha</a> on node server)
-    <br />Match the pattern in right side.
-    <br />
-    <div id="patternCaptchaHolder">
-      <div id="patternUI"></div>
-      <div id="patternCaptcha"></div>
-      <div id="actionButton">
-        <input type="button" value="Refresh" id="refreshCaptcha" />
-        <input type="button" value="Submit" id="submitCaptcha" />
+        <div id="ex-mapper" class="pattern-holder"></div>
+      </div>
+
+      <div class="example">
+          <strong>PatternLock with direction.</strong>
+          <pre class="brush: js;">
+            var lock= new PatternLock('#patternHolder');
+          </pre>
+          <div id="ex-direction" class="pattern-holder"></div>
+      </div>
+
+      <div class="example">
+        <strong>Using as a captcha</strong>(Require
+        <a href="http://ignitersworld.com/lab/patternCaptcha.html">
+          patternCaptha
+        </a>
+        on node server) <br />Match the pattern in right side.
+        <br />
+        <div id="patternCaptchaHolder">
+          <div id="pattern-ui"></div>
+          <div id="pattern-captcha"></div>
+          <div id="actionButton">
+            <input type="button" value="Refresh" id="refresh-captcha" />
+            <input type="button" value="Submit" id="submit-captcha" />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="./index.js"></script>
-</body>
-
+    <script src="./index.js"></script>
+  </body>
 </html>
