@@ -192,7 +192,7 @@ class PatternLock {
     this._render();
 
     // add class on holder
-    addClass(holder, 'patt-holder');
+    addClass(holder, 'patt-holder' + (option.otherClass ? ' '+option.otherClass : ''));
 
     // change offset property of holder if it does not have any property
     if (css(holder, 'position') === 'static') css(holder, { position: 'relative' });
