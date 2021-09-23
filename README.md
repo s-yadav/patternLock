@@ -21,7 +21,7 @@ You can also use the standalone UMD build by including `dist/patternlock.min.js`
 
 ### Documentation
 
-Check demo and documentation on <a href="http://ignitersworld.com/lab/patternLock.html#example">http://ignitersworld.com/lab/patternLock.html</a>
+Check demo and documentation on 
 
 ### Major updates
 
